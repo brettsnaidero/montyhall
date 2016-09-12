@@ -12,8 +12,7 @@ body {
     background-repeat: no-repeat;
     background-position: center center;
     position: relative;
-    display: inline;
-    float: left;
+    display: inline-block;
     height: 274px;
     width: 147px;
     margin: 20px;
@@ -64,11 +63,17 @@ body {
     animation-fill-mode: forwards;
     animation-delay: 0.5s;
     width:350px;
-}
+} 
 
 @keyframes go {
   100%{
     opacity:1;
     transform:rotateY(0deg);
   }
+}
+
+/* Game area */
+#game {
+  margin: 0 auto;
+  text-align: center;
 }
