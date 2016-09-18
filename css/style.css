@@ -1,11 +1,101 @@
 body {
-  background-color: #f0f0f0; }
+  background-color: #7c8a9b;
+  color: #FFFFFF;
+  font-family: 'Lato', sans-serif; }
 
+/* Message Container */
+h1 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold; }
+
+button {
+  display: inline-block;
+  padding: 1px;
+  border: 0;
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1);
+  background: #072e3c;
+  background: linear-gradient(#23546f, #072e3c);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 40px;
+  margin: 24px 0 0 0;
+  position: relative;
+  transition: 0.5s all ease;
+  cursor: pointer;
+  outline: none; }
+
+button:hover,
+button:focus {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  background: #0ca9ce;
+  background: linear-gradient(#0ca9ce, #09a2c5); }
+
+button:before {
+  content: '';
+  display: block;
+  height: 90%;
+  width: 90%;
+  border-radius: 40px;
+  transform: scale(1.02, 1.08);
+  position: absolute;
+  background: #f00;
+  background-position: 55px 0;
+  top: 5%;
+  left: 5%;
+  transition: 0.5s all ease;
+  z-index: -1;
+  background: radial-gradient(#ffcb6f, #ffcb6f, #ffcb6f, #ffcb6f, rgba(255, 203, 111, 0), rgba(255, 203, 111, 0)) no-repeat;
+  background-size: 150px 50px;
+  animation: electronic 2s infinite linear;
+  height: 100%;
+  width: 100%;
+  top: 0%;
+  left: 0%; }
+
+@keyframes electronic {
+  0%, 100% {
+    background-position: 20px -30px; }
+  25% {
+    background-position: 150px 5px; }
+  50% {
+    background-position: 20px 40px; }
+  75% {
+    background-position: -100px 5px; } }
+
+button span {
+  display: inline-block;
+  padding: 16px 34px 16px 34px;
+  font-size: 28px;
+  line-height: 1.2;
+  border-radius: 36px;
+  background-color: transparent;
+  text-decoration: none;
+  position: relative;
+  background: #1b465f;
+  background: linear-gradient(#326480 0%, #1b465f 45%, #1B465F 75%, #204e69 100%);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15); }
+
+button:hover span,
+button:focus span {
+  background: #13B9E0;
+  background: linear-gradient(#13B9E0, #0ca9ce 45%, #0ca9ce 75%, #0eb0d6); }
+
+/* Game Elements */
 .container {
   margin: 0 auto;
   width: 90%; }
 
-.perspective {
+.fade-others .door {
+  opacity: 0.5; }
+  .fade-others .door .thumb {
+    cursor: auto; }
+  .fade-others .door.selected {
+    opacity: 1; }
+
+.door {
   background: url("http://dc428.4shared.com/img/QWu4ziBq/s3/doorBorder.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -13,13 +103,28 @@ body {
   display: inline-block;
   height: 274px;
   width: 147px;
-  margin: 20px;
+  margin: 20px 40px;
   margin-left: 0px;
   -webkit-perspective: 450;
   border-radius: 3px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  position: relative;
+  transition: 0.5s all ease; }
 
-.thumb {
+.door.selected {
+  box-shadow: 0px 0px 20px rgba(0, 0, 255, 0.25); }
+
+.door.selected:before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  margin-left: -2px;
+  width: 4px;
+  height: 20px;
+  background-color: #000; }
+
+.door .thumb {
   background: url("http://dc428.4shared.com/img/-vayshJ-/s3/ClassDoor.png");
   background-repeat: no-repeat;
   background-position: center center;
@@ -33,10 +138,22 @@ body {
   transform-origin: left;
   cursor: pointer; }
 
-.thumbOpened {
+.door.open .thumb {
   transform: rotateY(-90deg);
   transform-origin: 8px;
   transition: .5s linear; }
+
+.door.car:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 20px;
+  height: 20px;
+  background-color: #000;
+  left: 50%;
+  top: 50%;
+  margin-top: -10px;
+  margin-left: -10px; }
 
 .alert {
   padding: 8px 35px 8px 14px;
@@ -64,6 +181,70 @@ body {
 /* Game area */
 #game {
   margin: 0 auto;
+  text-align: center;
+  position: fixed;
+  height: 1200px;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+/* Messages */
+#message-top {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+
+.message-info {
+  max-width: 800px;
   text-align: center; }
+
+.message-info p {
+  line-height: 1.5; }
+
+/* Message bottom */
+.monty {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 240px; }
+
+.monty img {
+  display: block;
+  width: 200px;
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+.monty-message {
+  background-color: #000;
+  padding: 20px;
+  border-radius: 5px; }
+
+/* Scores */
+#scores {
+  position: fixed;
+  bottom: 0;
+  right: 0; }
 
 /*# sourceMappingURL=maps/style.css.map */
