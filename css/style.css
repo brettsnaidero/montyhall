@@ -1,3 +1,46 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
 body {
   background-color: #7c8a9b;
   color: #FFFFFF;
@@ -178,16 +221,26 @@ button:focus span {
     opacity: 1;
     transform: rotateY(0deg); } }
 
+.main {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  height: 1200px;
+  height: 100vh;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -ms-flex-line-pack: justify;
+  align-content: space-between; }
+
 /* Game area */
 #game {
   margin: 0 auto;
   text-align: center;
-  position: fixed;
-  height: 1200px;
-  height: 100vh;
   width: 100%;
-  top: 0;
-  left: 0;
+  height: calc(100vh - 200px);
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
@@ -198,10 +251,9 @@ button:focus span {
 /* Messages */
 #message-top {
   position: fixed;
-  z-index: 2;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: -ms-flexbox;
   display: flex;
@@ -216,30 +268,72 @@ button:focus span {
   max-width: 800px;
   text-align: center; }
 
+.message-info h1 {
+  margin-bottom: 20px; }
+
 .message-info p {
   line-height: 1.5; }
 
 /* Message bottom */
 .monty {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: relative;
   width: 100%;
+  padding-right: 20px;
+  padding-bottom: 20px;
   display: -ms-flexbox;
   display: flex;
-  padding-left: 240px; }
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  padding-left: 200px;
+  min-height: 180px;
+  pointer-events: none;
+  -ms-flex-line-pack: justify;
+  align-content: space-between; }
+
+.monty.started {
+  pointer-events: all;
+  height: 180px; }
 
 .monty img {
   display: block;
-  width: 200px;
+  width: 180px;
   position: absolute;
   bottom: 0;
-  left: 0; }
+  left: -180px;
+  transition: 0.5s all ease; }
+
+.monty.started img {
+  left: 0px; }
 
 .monty-message {
-  background-color: #000;
+  background-color: #FFFFFF;
+  color: #222;
   padding: 20px;
-  border-radius: 5px; }
+  border-radius: 5px;
+  position: relative;
+  opacity: 0;
+  font-size: 24px;
+  line-height: 1.3;
+  width: 100%; }
+  .monty-message:before {
+    right: 100%;
+    top: 20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-right-color: #FFFFFF;
+    border-width: 10px; }
+
+.monty.started .monty-message {
+  opacity: 1; }
 
 /* Scores */
 #scores {

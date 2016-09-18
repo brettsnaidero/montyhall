@@ -1,5 +1,6 @@
 let gameContainer = document.querySelector('#game');
 let messageTopContainer = document.querySelector('#message-top');
+let messageBottomContainer = document.querySelector('#message-bottom');
 
 let state = {
   doorsReady: true,
@@ -37,7 +38,9 @@ delegate('body', 'click', '.start-game', event => {
   state.doors[carDoor].hasCar = true;
 
   // Render the opening message
-  renderMessage(state, messageTopContainer, 0);
+  renderMessage(state, messageTopContainer, ``);
+  renderMessage(state, messageBottomContainer, `Choose a door, any door!`);
+  messageBottomContainer.parentElement.classList.add('started');
 
   // Render the doors
   renderDoors(state, gameContainer);
@@ -60,7 +63,7 @@ delegate('body', 'click', '.door', event => {
 
     // After highlight animation has played, query user
     // window.setTimeout(x, 1000);
-    renderMessage(state, messageTopContainer, 1);
+    renderMessage(state, messageBottomContainer, `<h3>Excellent choice!</h3><button class="next-step"><span>Continue</span></button>`);
 
     // Move to second turn immediately, so users can't select more than one
     state.currentTurn = 2;
@@ -87,7 +90,7 @@ delegate('body', 'click', '.door', event => {
     state.doors[state.selectedDoor].selected = true;
 
     // Render the message
-    renderMessage(state, messageTopContainer, 3);
+    renderMessage(state, messageBottomContainer, `<h3>Alrighty!</h3><button class="next-step"><span>Open your door</span></button>`);
 
     event.delegateTarget.parentElement.classList.add('fade-others');
 
@@ -111,7 +114,7 @@ delegate('body', 'click', '.next-step', event => {
     document.querySelector('[data-number="' + openMe + '"]').classList.add('open');
 
     // Render the next message
-    renderMessage(state, messageTopContainer, 2);
+    renderMessage(state, messageBottomContainer, `I am going to open one of the doors for you! If you want, you can take this opportunity to <strong>switch your chosen door</strong>. Just click the door you would like to choose.`);
 
   } else if (state.currentTurn == 3) {
 
@@ -125,7 +128,7 @@ delegate('body', 'click', '.next-step', event => {
     state.doors[state.selectedDoor].open = true;
 
     // Render the next message
-    renderMessage(state, messageTopContainer, 4);
+    renderMessage(state, messageBottomContainer, `<h3>${state.winOrLose ? 'Congrats!' : 'Bad luck!'}</h3><p>${state.winOrLose ? 'You won a new car!' : 'You go home empty handed today.'}</p>`);
 
   }
 });
@@ -153,15 +156,7 @@ function whichDoorHasCar() {
 
 // Render messages
 function renderMessage(data, element, message) {
-  let messages = [
-    `<h3>Choose a door, any door!</h3>`,
-    `<h3>Excellent choice!</h3><button class="next-step"><span>Continue</span></button>`,
-    `<h3>Monty:</h3><p>I am going to open one of the doors for you! If you want, you can take this opportunity to <strong>switch your chosen door</strong>. Just click the door you would like to choose.`,
-    `<h3>Alrighty!</h3><button class="next-step"><span>Open your door</span></button>`,
-    `<h3>${data.winOrLose ? 'Congrats!' : 'Bad luck!'}</h3><p>${data.winOrLose ? 'You won a new car!' : 'You go home empty handed today.'}</p>`
-  ];
-
-  element.innerHTML = messages[message];
+  element.innerHTML = message;
 }
 
 // Choose a remaining door that doesn't have the car, to open
