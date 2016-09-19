@@ -52,6 +52,17 @@ function resetState() {
   }
 }
 
+function openingMessage() {
+  renderMessage(state, messageTopContainer, `<div class="message-info">
+        <h1>Welcome to the Monty Hall Problem!</h1>
+        <p>Choose wisely! This game is an exercise in probability.</p>
+        <button class="start-game">
+          <span>Start Game</span>
+        </button>
+      </div>`);
+}
+openingMessage();
+
 // Start game button
 delegate('body', 'click', '.start-game', event => {
 
@@ -160,16 +171,10 @@ delegate('body', 'click', '.next-step', event => {
     // Reset the state variables to start a new game
     resetState();
 
-    // Render the next message
+    // Clear the messages
     renderMessage(state, messageBottomContainer, ``);
-    // Render the next message
-    renderMessage(state, messageTopContainer, `<div class="message-info">
-			<h1>Welcome to the Monty Hall Problem!</h1>
-			<p>The Monty Hall Problem gets its name from the TV game show, Let's Make A Deal, hosted by Monty Hall 1. The scenario is such: you are given the opportunity to select one closed door of three, behind one of which there is a prize. Once you have made your selection, Monty Hall will open one of the remaining doors, revealing that it does not contain the prize 2. He then asks you if you would like to switch your selection to the other unopened door, or stay with your original choice.</p>
-			<button class="start-game">
-				<span>Start Game</span>
-			</button>
-		</div>`);
+    // Render the opening message
+    openingMessage();
 
     // Clear the game screen
     messageBottomContainer.parentElement.classList.remove('started');
@@ -180,7 +185,7 @@ delegate('body', 'click', '.next-step', event => {
 
 // Render the doors to start the game
 function renderDoors(data, element) {
-  let newView = ''
+  let newView = '';
   data.doors.forEach( (item, number) => {
     newView += `<div class="door" data-number="${number}" id="door${number}"><div class="thumb"></div></div>`;
   });
@@ -189,7 +194,6 @@ function renderDoors(data, element) {
 
 // Find out which door has the car door
 function whichDoorHasCar() {
-  let answer = '';
   state.doors.forEach( (item, number) => {
     if (item.hasCar == true) {
       answer = number;
