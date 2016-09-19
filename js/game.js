@@ -52,8 +52,6 @@ function resetState() {
   }
 }
 
-// <h3>Alrighty, you ${state.switched ? 'switched' : 'stayed'}!</h3>
-
 // Start game button
 delegate('body', 'click', '.start-game', event => {
 
