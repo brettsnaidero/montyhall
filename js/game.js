@@ -26,6 +26,32 @@ let state = {
   ]
 }
 
+function resetState() {
+  state = {
+    doorsReady: true,
+    selectedDoor: '',
+    currentTurn: 0,
+    switched: false,
+    doors: [
+      {
+        open: false,
+        selected: false,
+        hasCar: false
+      },
+      {
+        open: false,
+        selected: false,
+        hasCar: false
+      },
+      {
+        open: false,
+        selected: false,
+        hasCar: false
+      }
+    ]
+  }
+}
+
 // <h3>Alrighty, you ${state.switched ? 'switched' : 'stayed'}!</h3>
 
 // Start game button
@@ -39,7 +65,7 @@ delegate('body', 'click', '.start-game', event => {
 
   // Render the opening message
   renderMessage(state, messageTopContainer, ``);
-  renderMessage(state, messageBottomContainer, `Choose a door, any door!`);
+  renderMessage(state, messageBottomContainer, `<h3>Hi! I'm Monty Hall.</h3><p>Behind one of these door lies a brand spanking new car, and it could be yours if you choose the right one! Choose a door, any door!</p>`);
   messageBottomContainer.parentElement.classList.add('started');
 
   // Render the doors
@@ -90,7 +116,7 @@ delegate('body', 'click', '.door', event => {
     state.doors[state.selectedDoor].selected = true;
 
     // Render the message
-    renderMessage(state, messageBottomContainer, `<h3>Alrighty!</h3><button class="next-step"><span>Open your door</span></button>`);
+    renderMessage(state, messageBottomContainer, `<h3>Alrighty!</h3><p>${state.switched ? 'You decided to switch. Excellent choice.' : 'You decided to stay put.'}</p><button class="next-step"><span>Open your door</span></button>`);
 
     event.delegateTarget.parentElement.classList.add('fade-others');
 
@@ -114,7 +140,7 @@ delegate('body', 'click', '.next-step', event => {
     document.querySelector('[data-number="' + openMe + '"]').classList.add('open');
 
     // Render the next message
-    renderMessage(state, messageBottomContainer, `I am going to open one of the doors for you! If you want, you can take this opportunity to <strong>switch your chosen door</strong>. Just click the door you would like to choose.`);
+    renderMessage(state, messageBottomContainer, `I am going to open one of the <strong>empty</strong> doors for you! If you want, you can take this opportunity to <strong>switch your chosen door</strong>. Just click the door you would like to choose.`);
 
   } else if (state.currentTurn == 3) {
 
@@ -128,8 +154,29 @@ delegate('body', 'click', '.next-step', event => {
     state.doors[state.selectedDoor].open = true;
 
     // Render the next message
-    renderMessage(state, messageBottomContainer, `<h3>${state.winOrLose ? 'Congrats!' : 'Bad luck!'}</h3><p>${state.winOrLose ? 'You won a new car!' : 'You go home empty handed today.'}</p>`);
+    renderMessage(state, messageBottomContainer, `<h3>${state.winOrLose ? 'Congrats!' : 'Bad luck!'}</h3><p>${state.winOrLose ? 'You won a new car!' : 'You go home empty handed today.'}</p><button class="next-step"><span>Start again?</span></button>`);
 
+    state.currentTurn++;
+
+  } else if (state.currentTurn == 4) {
+    // Reset the state variables to start a new game
+    resetState();
+
+    // Render the next message
+    renderMessage(state, messageBottomContainer, ``);
+    // Render the next message
+    renderMessage(state, messageTopContainer, `<div class="message-info">
+			<h1>Welcome to the Monty Hall Problem!</h1>
+			<p>The Monty Hall Problem gets its name from the TV game show, Let's Make A Deal, hosted by Monty Hall 1. The scenario is such: you are given the opportunity to select one closed door of three, behind one of which there is a prize. Once you have made your selection, Monty Hall will open one of the remaining doors, revealing that it does not contain the prize 2. He then asks you if you would like to switch your selection to the other unopened door, or stay with your original choice.</p>
+			<button class="start-game">
+				<span>Start Game</span>
+			</button>
+		</div>`);
+
+    // Clear the game screen
+    messageBottomContainer.parentElement.classList.remove('started');
+    gameContainer.classList.remove('fade-others');
+    gameContainer.innerHTML = '';
   }
 });
 
@@ -147,7 +194,6 @@ function whichDoorHasCar() {
   let answer = '';
   state.doors.forEach( (item, number) => {
     if (item.hasCar == true) {
-      console.log('Which door has car:' + number);
       answer = number;
     }
   });
@@ -161,12 +207,9 @@ function renderMessage(data, element, message) {
 
 // Choose a remaining door that doesn't have the car, to open
 function pickDoorToOpen(userChoice, carDoor) {
-  openDoor = (Math.floor(Math.random() * 3) + 1) - 1;
+  let openDoor = (Math.floor(Math.random() * 3) + 1) - 1;
   while (openDoor == userChoice || openDoor == carDoor) {
     openDoor = (Math.floor(Math.random() * 3) + 1) - 1;
   };
-  console.log('Car door:' + carDoor);
-  console.log("Userchoice: " + userChoice);
-  console.log("Open: " + openDoor);
   return openDoor;
 };
