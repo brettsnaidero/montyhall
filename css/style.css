@@ -44,27 +44,29 @@ table {
 body {
   background-color: #7c8a9b;
   color: #FFFFFF;
-  font-family: 'Lato', sans-serif; }
+  font-family: 'Open Sans', sans-serif; }
 
 /* Message Container */
 h1 {
   text-align: center;
   font-size: 30px;
-  font-weight: bold; }
+  font-family: 'Fredoka One', cursive; }
 
 h3 {
-  font-weight: bold; }
+  font-family: 'Fredoka One', cursive; }
 
 strong {
   font-weight: bold; }
 
 .message-info button {
-  margin: 24px 0 0 0; }
+  margin: 24px 0 0 0;
+  font-family: 'Fredoka One', cursive; }
   .message-info button span {
     padding: 16px 34px 16px 34px;
     font-size: 28px; }
 
 button {
+  font-family: 'Fredoka One', cursive;
   display: inline-block;
   padding: 1px;
   border: 0;
@@ -270,6 +272,7 @@ button:focus span {
   flex-wrap: wrap; }
 
 .message-info {
+  padding: 0 10px;
   max-width: 800px;
   text-align: center; }
 
@@ -294,14 +297,12 @@ button:focus span {
   -ms-flex-line-pack: stretch;
   align-content: stretch;
   padding-left: 200px;
-  min-height: 180px;
   pointer-events: none;
   -ms-flex-line-pack: justify;
   align-content: space-between; }
 
 .monty.started {
-  pointer-events: all;
-  height: 180px; }
+  pointer-events: all; }
 
 .monty img {
   display: block;
@@ -317,7 +318,6 @@ button:focus span {
 .monty-message {
   background-color: #FFFFFF;
   color: #222;
-  padding: 20px;
   border-radius: 5px;
   position: relative;
   opacity: 0;
@@ -336,6 +336,9 @@ button:focus span {
     border-color: rgba(255, 255, 255, 0);
     border-right-color: #FFFFFF;
     border-width: 10px; }
+
+.monty.started .monty-message {
+  padding: 20px; }
 
 .monty.started .monty-message {
   opacity: 1; }
