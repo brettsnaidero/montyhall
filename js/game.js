@@ -69,7 +69,7 @@ delegate('body', 'click', '.start-game', event => {
   state.currentTurn = 1;
 
   // Put the car behind a random door
-  let carDoor = (Math.floor(Math.random() * 3) + 1) - 1; // 0,1,2
+  let carDoor = Math.floor(Math.random() * 3); // 0,1,2
   state.doors[carDoor].hasCar = true;
 
   // Render the opening message
@@ -144,7 +144,6 @@ delegate('body', 'click', '.next-step', event => {
     // Open a door
     let carDoor = whichDoorHasCar();
     let openMe = pickDoorToOpen(state.selectedDoor, carDoor);
-
     state.doors[openMe].open = true;
     document.querySelector('[data-number="' + openMe + '"]').classList.add('open');
 
@@ -153,13 +152,14 @@ delegate('body', 'click', '.next-step', event => {
 
   } else if (state.currentTurn == 3) {
 
+	// Put car image behind door if it has the car
     if ( state.doors[state.selectedDoor].hasCar == true ) {
       state.winOrLose = true;
       document.querySelector('[data-number="' + state.selectedDoor + '"]').classList.add('car');
     }
 
+	// Open the door
     document.querySelector('[data-number="' + state.selectedDoor + '"]').classList.add('open');
-
     state.doors[state.selectedDoor].open = true;
 
     // Render the next message
@@ -209,9 +209,9 @@ function renderMessage(data, element, message) {
 
 // Choose a remaining door that doesn't have the car, to open
 function pickDoorToOpen(userChoice, carDoor) {
-  let openDoor = (Math.floor(Math.random() * 3) + 1) - 1;
+  let openDoor = Math.floor(Math.random() * 3);
   while (openDoor == userChoice || openDoor == carDoor) {
-    openDoor = (Math.floor(Math.random() * 3) + 1) - 1;
+    openDoor = Math.floor(Math.random() * 3);
   };
   return openDoor;
 };
